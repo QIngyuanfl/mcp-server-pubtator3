@@ -1,0 +1,10 @@
+[project]
+name = "mcp-server-pubtator3"
+version = "0.1.0"
+description = "PubTator3 API compatible with the MCP agent protocol"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "aiohttp>=3.11.18",
+    "mcp[cli]>=1.6.0",
+]
