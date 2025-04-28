@@ -8,6 +8,85 @@ from pubtator_client import PubtatorClient
 
 app = Server("mcp-server-pubtator3")
 pubtator_client = PubtatorClient()
+
+@app.list_prompts()
+async def list_prompts() -> list[types.Prompt]:
+    """List available prompts for interacting with Pubtator."""
+    return [
+        types.Prompt(
+            name = "relation_prover",
+            description="Prove whether two the two biology ontologies have the certain relations",
+            arguments=[
+                types.PromptArgument(
+                    name="entity1",
+                    description="The first biology ontology",
+                    required=True
+                ),
+                types.PromptArgument(
+                    name="entity2",
+                    description="The second biology ontology",
+                    required=True
+                ),
+                types.PromptArgument(
+                    name="relation",
+                    description="The relation between the two entities",
+                    required=True
+                ),
+            ] 
+        )
+    ]
+@app.get_prompt()
+async def get_prompt(
+    name: str, arguments: dict[str, str] | None = None
+) -> types.GetPromptResult:
+    if name != "relation_prover":
+        raise ValueError(f"Prompt not found: {name}")
+
+    if name == "relation_prover":
+        entity1 = arguments.get("entity1") if arguments else ""
+        entity2 = arguments.get("entity2") if arguments else ""
+        relation = arguments.get("relation") if arguments else ""
+        return types.GetPromptResult(
+            messages=[
+                types.PromptMessage(
+                    role="user",
+                    content=types.TextContent(
+                        type="text",
+                        text=f"""You are a specialized AI Agent focused on biomedical literature analysis from pubmed. Your task is to evaluate and validate whether a biological relationship between two entities can be semantically supported by scientific literature.
+
+Step-by-step process:
+
+1. Extract the minimal keyword (MeSH Term) from the pair provided to search scientific literature—do not use the relationship itself as the keyword.
+3. Begin by reviewing abstracts only:
+   - If an abstract contains a direct or semantically implied connection between the two entities, then proceed to review the full text to confirm and strengthen the evidence.
+   - If no abstract shows any semantic link, halt the search and report that no credible evidence exists.
+4. If the minimal keywords yield no results, refine your query by subtracting elements from the original keyword set—removing non-essential words using close synonyms or semantically equivalent phrases without adding any new terms (e.g., using the gene name or function name without additional descriptors).
+5. Apply semantic reasoning to evaluate whether the intended relationship exists, even if the wording does not exactly match.
+
+For any paper that supports the relationship:
+- Report the **title and PMID**.
+- Extract a **exact sentence** from the abstract or full text that supports the connection.
+
+
+you must obey the following response format strictly:
+
+# Search Strategy and Reasoning
+"Insert your keyword query logic and how you reasoned through the abstract/full text here"
+
+# literature evidence
+## "Insert title and PMID here"
+"Insert the exact sentence from the abstract or full text that semantically supports the connection between the two biological entities here"
+
+Answer: <True/False> 
+
+Prove whether there is literature evidence for the pair:
+'{entity1}' and '{entity2}' with relation '{relation}'. "
+"""
+                    )
+                )
+            ]
+        )
+
 @app.list_tools()
 async def list_tools() -> list[types.Tool]:
     """List available tools for interacting with Pubtator."""
@@ -336,7 +415,6 @@ async def main():
             streams[1],
             app.create_initialization_options()
         )
-
 
 if __name__ == "__main__":
     logging.basicConfig(level=logging.INFO)

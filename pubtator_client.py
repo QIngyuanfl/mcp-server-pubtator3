@@ -1,10 +1,20 @@
 import aiohttp
+from aiolimiter import AsyncLimiter
 import json
 from typing import Optional
 class PubtatorClient:
     def __init__(self) -> None:
         self.base_url = "https://www.ncbi.nlm.nih.gov/research/pubtator3-api/"
-    
+        self._limiter = AsyncLimiter(3, 1)
+
+    async def _rate_limited_request(self, url, session, json=True, **kwargs):
+        async with self._limiter:
+            async with session.get(url, **kwargs) as resp:
+                if resp.status != 200:
+                    text = await resp.text()
+                    raise RuntimeError(f"API error: {resp.status} - {text}")
+                return await resp.json() if json else await resp.text()
+            
     async def find_entity(self, query:str, bioconcept:Optional[str]=None, limit:Optional[int]=10):
         """
         Query PubTator3 for identifiers given a free text bioconcept query,
@@ -19,12 +29,8 @@ class PubtatorClient:
 
         # Use aiohttp for async HTTP requests
         async with aiohttp.ClientSession() as session:
-            async with session.get(url) as resp:
-                if resp.status != 200:
-                    text = await resp.text()
-                    raise RuntimeError(f"PubTator3 API error: {resp.status} - {text}")
-                data = await resp.json()
-                return json.dumps(data)
+            resp = await self._rate_limited_request(url, session, json=True)
+            return json.dumps(resp)
     
                 
     async def search_pubtator(self, query: str, relation: Optional[str] = "ANY", limit: Optional[int] = 10):
@@ -51,12 +57,8 @@ class PubtatorClient:
             url = self.base_url + f"search/?text=relations:{relation}|{query}&limit={safe_limit}"
 
         async with aiohttp.ClientSession() as session:
-            async with session.get(url) as resp:
-                if resp.status != 200:
-                    text = await resp.text()
-                    raise RuntimeError(f"PubTator3 API error: {resp.status} - {text}")
-                data = await resp.json()
-                return json.dumps(data)
+            resp = await self._rate_limited_request(url, session, json=True)
+            return json.dumps(resp)
     
 
     async def get_paper_text(
@@ -99,18 +101,9 @@ class PubtatorClient:
             url = f"{self.base_url}publications/pmc_export/{format}?pmcids={pmcid_str}"
 
         async with aiohttp.ClientSession() as session:
-            async with session.get(url) as resp:
-                if resp.status != 200:
-                    text = await resp.text()
-                    raise RuntimeError(f"PubTator3 API export error: {resp.status} - {text}")
-                # For pubtator (plain text), return as text, for others, may be JSON or XML
-                if format == "biocjson":
-                    data =  await resp.json()
-                else:
-                    data = await resp.text()
-                    raise ValueError("others format are not supported now.")
+            resp = await self._rate_limited_request(url, session, json=True)
 
-                return data
+            return json.dumps(resp)
     # INSERT_YOUR_CODE
     async def find_related_entities(
         self,
@@ -150,8 +143,5 @@ class PubtatorClient:
 
         url = f"{self.base_url}relations"
         async with aiohttp.ClientSession() as session:
-            async with session.get(url, params=params) as resp:
-                if resp.status != 200:
-                    text = await resp.text()
-                    raise RuntimeError(f"PubTator3 API relation error: {resp.status} - {text}")
-                return await json.dumps(resp.json())
+            resp = await self._rate_limited_request(url, session, json=True)
+            return json.dumps(resp)
