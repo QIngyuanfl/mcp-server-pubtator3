@@ -1,0 +1,11 @@
+README.md
+pyproject.toml
+src/__init__.py
+src/__main__.py
+src/pubtator_client.py
+src/server.py
+src/mcp_server_pubtator3.egg-info/PKG-INFO
+src/mcp_server_pubtator3.egg-info/SOURCES.txt
+src/mcp_server_pubtator3.egg-info/dependency_links.txt
+src/mcp_server_pubtator3.egg-info/requires.txt
+src/mcp_server_pubtator3.egg-info/top_level.txt
