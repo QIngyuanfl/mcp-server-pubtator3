@@ -54,15 +54,12 @@ The server provides the following tools to interact with the PubTator3 API, acce
 Each tool's full input schema, description, and examples are provided in the `list_tools` endpoint within `server.py`.  
 Use these tools to integrate sophisticated PubTator3-powered biomedical knowledge access in compatible platforms or agents.
 
-## Usage
+## Installation
 
-1. **Install Python** 3.7+ and required libraries (see below).
+1. **Install Python** 3.13+ and required libraries (see below).
 2. **Run the server:**
    ```bash
-   python server.py
+   pip install mcp-server-pubtator3
    ```
-3. **Interact via MCP** (Multi-capability Protocol) with the tools registered by this server.
 
-
-Install requirements via:
 
