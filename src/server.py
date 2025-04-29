@@ -8,7 +8,8 @@ from pubtator_client import PubtatorClient
 
 app = Server("mcp-server-pubtator3")
 pubtator_client = PubtatorClient()
-
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger("mcp-server-pubtator3")
 @app.list_prompts()
 async def list_prompts() -> list[types.Prompt]:
     """List available prompts for interacting with Pubtator."""
@@ -416,7 +417,5 @@ async def main():
             app.create_initialization_options()
         )
 
-if __name__ == "__main__":
-    logging.basicConfig(level=logging.INFO)
-    logger = logging.getLogger("mcp-server-pubtator3")
-    asyncio.run(main())
+
+
