@@ -103,8 +103,8 @@ class PubtatorClient:
         async with aiohttp.ClientSession() as session:
             resp = await self._rate_limited_request(url, session, json=True)
 
-            return json.dumps(resp)
-    # INSERT_YOUR_CODE
+            return resp
+
     async def find_related_entities(
         self,
         entity_id: str,
