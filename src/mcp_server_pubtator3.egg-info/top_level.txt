@@ -1,1 +1,1 @@
-mcp-server-pubtator3
+mcp_server_pubtator3

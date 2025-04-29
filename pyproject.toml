@@ -1,6 +1,6 @@
 [project]
 name = "mcp-server-pubtator3"
-version = "0.1.4"
+version = "0.1.5"
 description = "PubTator3 API compatible with the MCP agent protocol"
 readme = "README.md"
 requires-python = ">=3.10"
@@ -17,7 +17,7 @@ maintainers = [
   {name = "Qingyuan Zhang", email = "598153063@qq.com"}
 ]
 [project.scripts]
-mcp-server-pubtator3 = "mcp_server_pubtator3.__main__:__main__"
+mcp-server-pubtator3 = "mcp_server_pubtator3.__main__:main"
 
 
 [project.urls]

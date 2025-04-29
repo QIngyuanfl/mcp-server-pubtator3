@@ -4,7 +4,7 @@ import logging
 import mcp.types as types
 from mcp.server import Server
 from mcp.server.stdio import stdio_server
-from pubtator_client import PubtatorClient
+from .pubtator_client import PubtatorClient
 
 app = Server("mcp-server-pubtator3")
 pubtator_client = PubtatorClient()
