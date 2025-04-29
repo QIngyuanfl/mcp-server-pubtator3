@@ -56,10 +56,17 @@ Use these tools to integrate sophisticated PubTator3-powered biomedical knowledg
 
 ## Installation
 
-1. **Install Python** 3.13+ and required libraries (see below).
-2. **Run the server:**
+1. **Installation** 3.10+ and required libraries (see below).
    ```bash
    pip install mcp-server-pubtator3
+   ```
+2. **Run the server:**
+   ```bash
+   python -m mcp-server-pubtator3
+   ```
+   or
+   ```bash
+   uv run mcp-server-pubtator3
    ```
 
 

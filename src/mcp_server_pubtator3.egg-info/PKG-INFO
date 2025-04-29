@@ -1,7 +1,14 @@
 Metadata-Version: 2.4
 Name: mcp-server-pubtator3
-Version: 0.1.1
+Version: 0.1.4
 Summary: PubTator3 API compatible with the MCP agent protocol
+Home-page: https://github.com/QIngyuanfl/mcp-server-pubtator3.git
+Author: Qingyuan Zhang
+Author-email: Qingyuan Zhang <598153063@qq.com>
+Maintainer-email: Qingyuan Zhang <598153063@qq.com>
+License-Expression: MIT AND (Apache-2.0 OR BSD-2-Clause)
+Project-URL: Repository, https://github.com/QIngyuanfl/mcp-server-pubtator3.git
+Project-URL: Issues, https://github.com/QIngyuanfl/mcp-server-pubtator3/issues
 Requires-Python: >=3.10
 Description-Content-Type: text/markdown
 Requires-Dist: aiohttp

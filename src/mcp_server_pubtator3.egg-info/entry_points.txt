@@ -1,2 +1,2 @@
 [console_scripts]
-mcp-simple-pubmed = src:main
+mcp-server-pubtator3 = mcp_server_pubtator3.__main__:__main__

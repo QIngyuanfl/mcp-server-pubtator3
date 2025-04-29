@@ -1,4 +1,1 @@
-__init__
-__main__
-pubtator_client
-server
+mcp-server-pubtator3

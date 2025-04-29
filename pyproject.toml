@@ -1,13 +1,25 @@
 [project]
 name = "mcp-server-pubtator3"
-version = "0.1.1"
+version = "0.1.4"
 description = "PubTator3 API compatible with the MCP agent protocol"
 readme = "README.md"
 requires-python = ">=3.10"
+license = "MIT AND (Apache-2.0 OR BSD-2-Clause)"
 dependencies = [
     "aiohttp",
     "aiolimiter",
     "mcp[cli]",
 ]
+authors = [
+  {name = "Qingyuan Zhang", email = "598153063@qq.com"}
+]
+maintainers = [
+  {name = "Qingyuan Zhang", email = "598153063@qq.com"}
+]
 [project.scripts]
-mcp-simple-pubmed = "src:main"
+mcp-server-pubtator3 = "mcp_server_pubtator3.__main__:__main__"
+
+
+[project.urls]
+Repository = "https://github.com/QIngyuanfl/mcp-server-pubtator3.git"
+Issues = "https://github.com/QIngyuanfl/mcp-server-pubtator3/issues"
