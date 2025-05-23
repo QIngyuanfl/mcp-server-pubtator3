@@ -58,6 +58,16 @@ class PubtatorClient:
 
         async with aiohttp.ClientSession() as session:
             resp = await self._rate_limited_request(url, session, json=True)
+            resp = resp['pubtator3'][0]
+            resp.pop('_id', None)
+            resp.pop('id', None)
+            resp.pop('infons', None)
+            for passages in resp['passages']:
+                # Remove specific keys from the 'passages' list
+                passages.pop('offset', None)  # Remove 'offset' key in each passage
+                passages.pop('annotations', None)  # Remove 'annotations' key in each passage
+
+            
             return json.dumps(resp)
     
 
