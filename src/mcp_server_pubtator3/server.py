@@ -161,27 +161,7 @@ This returns relevant PubTator3 search results for your query.
                         "type": "string",
                         "description": "Query string to search PubTator3 (use free text, entity ID)."
                     },
-                    # "relation": {
-                    #     "type": "string",
-                    #     "description": "Relation type to filter search by. Choose from: 'treat', 'cause', 'cotreat', 'convert', 'compare', 'interact', 'associate', 'positive_correlate', 'negative_correlate', 'prevent', 'inhibit', 'stimulate', 'drug_interact'. (optional)",
-                    #     "enum": [
-                    #         "treat",
-                    #         "cause",
-                    #         "cotreat",
-                    #         "convert",
-                    #         "compare",
-                    #         "interact",
-                    #         "associate",
-                    #         "positive_correlate",
-                    #         "negative_correlate",
-                    #         "prevent",
-                    #         "inhibit",
-                    #         "stimulate",
-                    #         "drug_interact",
-                    #         "ANY"
-                    #     ],
-                    #     "default": "ANY"
-                    # },
+
                     "limit": {
                         "type": "number",
                         "description": "Maximum number of results to return (default: 10, max: 50). (optional)",
@@ -322,7 +302,7 @@ async def fetch_tool(name:str, argument:dict) -> list[types.TextContent]:
             pmids = argument.get("pmids")
             pmcids = argument.get("pmcids")
             format_ = argument.get("format", "biocjson")
-            full = argument.get("full", None)
+            full = argument.get("full", True)
 
             if not pmids and not pmcids:
                 logger.error("Missing required argument: either 'pmids' or 'pmcids' must be provided.")

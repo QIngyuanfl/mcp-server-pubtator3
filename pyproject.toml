@@ -1,6 +1,6 @@
 [project]
 name = "mcp-server-pubtator3"
-version = "0.1.6"
+version = "0.2"
 description = "PubTator3 API compatible with the MCP agent protocol"
 readme = "README.md"
 requires-python = ">=3.10"

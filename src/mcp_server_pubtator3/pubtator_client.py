@@ -1,5 +1,6 @@
 import aiohttp
 from aiolimiter import AsyncLimiter
+import asyncio
 import json
 from typing import Optional
 class PubtatorClient:
@@ -58,7 +59,44 @@ class PubtatorClient:
 
         async with aiohttp.ClientSession() as session:
             resp = await self._rate_limited_request(url, session, json=True)
-            return json.dumps(resp)
+            # Get basic article data for each article in the results
+            # Collect PMIDs from the search results
+            pmids = [str(art.get("pmid")) for art in resp.get('results', []) if art.get("pmid")]
+
+            # Fetch abstracts using get_paper_text
+            abstracts_map = {}
+            if pmids:
+                paper_text_resp = await self.get_paper_text(pmids=pmids, format="biocjson", full=False)
+                # paper_text_resp is expected to be a dict with 'documents' key
+                for doc in paper_text_resp['PubTator3']:
+                    pmid = doc['pmid']
+                    for passage in doc.get("passages", []):
+                    # Try to get the abstract from passages
+                        abstract = None
+                        if passage.get("infons", {}).get("type") == "abstract":
+                            abstract = passage.get("text")
+                            break
+                    abstracts_map[pmid] = abstract
+
+            articles = []
+            for art in resp.get('results', []):
+                pmid = art.get("pmid")
+                article = {
+                    "pmid": pmid,
+                    "title": art.get("title"),
+                    "abstract": abstracts_map.get(pmid),
+                    "journal": art.get("journal"),
+                    "authors": art.get("authors", [])
+                }
+                articles.append(article)
+            return json.dumps({
+                "articles": articles,
+                "facets": resp.get("facets", {}),
+                "page_size": resp.get("page_size"),
+                "current": resp.get("current"),
+                "count": resp.get("count"),
+                "total_pages": resp.get("total_pages")
+            })
     
 
     async def get_paper_text(
@@ -66,7 +104,7 @@ class PubtatorClient:
         pmids: Optional[list[str]] = None,
         pmcids: Optional[list[str]] = None,
         format: str = "biocjson",
-        full: Optional[bool] = None
+        full: Optional[bool] = True
     ):
         """
         get the abstract or full text a set of publications in a specified format.

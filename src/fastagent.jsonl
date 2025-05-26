@@ -1,0 +1,3 @@
+{"level":"ERROR","timestamp":"2025-05-26T06:32:52.870575","namespace":"mcp_agent.mcp.mcp_connection_manager","message":"pubtator3: Lifecycle task encountered an error: unhandled errors in a TaskGroup (1 sub-exception)","data":{"exc_info":true,"data":{"progress_action":"Error","server_name":"pubtator3"}}}
+{"level":"ERROR","timestamp":"2025-05-26T06:41:16.397689","namespace":"mcp_agent.mcp.mcp_connection_manager","message":"pubtator3: Lifecycle task encountered an error: unhandled errors in a TaskGroup (1 sub-exception)","data":{"exc_info":true,"data":{"progress_action":"Error","server_name":"pubtator3"}}}
+{"level":"ERROR","timestamp":"2025-05-26T06:41:24.471470","namespace":"mcp_agent.mcp.mcp_aggregator.default","message":"Server 'default' not found"}
