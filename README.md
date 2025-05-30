@@ -62,11 +62,7 @@ Use these tools to integrate sophisticated PubTator3-powered biomedical knowledg
    ```
 2. **Run the server:**
    ```bash
-   python -m mcp-server-pubtator3
-   ```
-   or
-   ```bash
-   uv run mcp-server-pubtator3
+   mcp-server-pubtator3
    ```
 
 
