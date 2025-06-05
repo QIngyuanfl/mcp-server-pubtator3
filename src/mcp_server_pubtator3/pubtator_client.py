@@ -143,6 +143,7 @@ class PubtatorClient:
 
             return resp
 
+
     async def find_related_entities(
         self,
         entity_id: str,
@@ -169,17 +170,16 @@ class PubtatorClient:
             'positive_correlate', 'negative_correlate', 'prevent', 'inhibit', 'stimulate', 'drug_interact'
         }
 
-        params = {'e1': entity_id}
         if relation_type:
             if relation_type not in VALID_RELATION_TYPES:
                 raise ValueError(f"Invalid relation_type: {relation_type}. Must be one of {VALID_RELATION_TYPES}")
-            params['type'] = relation_type
+        else:
+            relation_type = ''
         if entity_type:
             if entity_type not in VALID_ENTITY_TYPES:
                 raise ValueError(f"Invalid entity_type: {entity_type}. Must be one of {VALID_ENTITY_TYPES}")
-            params['e2'] = entity_type
 
-        url = f"{self.base_url}relations"
+        url = f"{self.base_url}relations?e1={entity_id}&type={relation_type}&e2={entity_type}"
         async with aiohttp.ClientSession() as session:
             resp = await self._rate_limited_request(url, session, json=True)
             return json.dumps(resp)

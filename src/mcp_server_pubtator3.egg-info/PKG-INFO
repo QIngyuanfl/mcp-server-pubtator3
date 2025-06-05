@@ -1,6 +1,6 @@
 Metadata-Version: 2.4
 Name: mcp-server-pubtator3
-Version: 0.2
+Version: 0.2.1
 Summary: PubTator3 API compatible with the MCP agent protocol
 Home-page: https://github.com/QIngyuanfl/mcp-server-pubtator3.git
 Author: Qingyuan Zhang
@@ -79,11 +79,7 @@ Use these tools to integrate sophisticated PubTator3-powered biomedical knowledg
    ```
 2. **Run the server:**
    ```bash
-   python -m mcp-server-pubtator3
-   ```
-   or
-   ```bash
-   uv run mcp-server-pubtator3
+   mcp-server-pubtator3
    ```
 
 

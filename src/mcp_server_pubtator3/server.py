@@ -229,11 +229,11 @@ https://www.ncbi.nlm.nih.gov/research/pubtator3-api/relations?e1=entityId&type=r
         inputSchema={
             "type": "object",
             "properties": {
-                "e1": {
+                "entity_id": {
                     "type": "string",
                     "description": "Entity ID to start from. Obtainable via 'Find Entity ID'."
                 },
-                "type": {
+                "relation_type": {
                     "type": "string",
                     "enum": [
                         "treat", "cause", "cotreat", "convert", "compare", "interact",
@@ -242,13 +242,13 @@ https://www.ncbi.nlm.nih.gov/research/pubtator3-api/relations?e1=entityId&type=r
                     ],
                     "description": "Relation type to filter for. Optional."
                 },
-                "e2": {
+                "entity_type": {
                     "type": "string",
                     "enum": ["gene", "disease", "chemical", "variant"],
                     "description": "Entity type of related entities to query for. Optional."
                 }
             },
-            "required": ["e1"]
+            "required": ["entity_id"]
         }
     )
     ]
